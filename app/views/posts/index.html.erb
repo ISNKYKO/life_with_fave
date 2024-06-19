@@ -1,9 +1,11 @@
-<% @post.each do |post| %>
+<% @posts.each do |post| %>
   <div>
-    <%= image_tag post.get_image %>
-    <p>投稿ユーザー画像：<%= image_tag 'sample-author1.jpg' %></p>
-    <p>ショップ名：<%= post.name %></p>
-    <p>説明：<%= post.text %></p>
+    <%= link_to post_path(post.id) do %>
+    　<%= image_tag post.get_image %>
+  <% end %>
+     <p>投稿ユーザー画像：<%= image_tag post.user.get_profile_image(100,100) %></p>
+    <p>タイトル：<%= post.post_title %></p>
+    <p>説明：<%= post.post_text %></p>
     <p>ユーザーネーム：<%= post.user.name %></p>
   </div>
 <% end %>
