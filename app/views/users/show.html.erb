@@ -17,5 +17,6 @@
   <p>ショップ名：<%= post.post_title %></p>
   <p>説明：<%= post.post_text %></p>
   <p>ユーザーネーム：<%= post.user.name %></p>
+  <p><%= link_to "#{post.post_comments.count} コメント", post_path(post.id) %></p>
 </div>
 <% end %>
