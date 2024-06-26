@@ -3,6 +3,7 @@
   <%= image_tag @user.get_profile_image(100,100) %>
   <% if @user == current_user %>
     <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+    <%= link_to "ユーザー情報編集", edit_user_registration_path(current_user.id), class: "header-button" %>
   <% end %>
 </div>
 
