@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   has_many :favorites, dependent: :destroy
   
   validates :post_title, presence: true
-  validates :post_text, presence: true
+  validates :post_text, presence: true, length: { minimum: 10 }
   
   def get_image
    unless image.attached?

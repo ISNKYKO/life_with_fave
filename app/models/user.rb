@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
-  validates :name, presence: true       
+  validates :name, presence: true, length: { minimum: 1 }       
   validates :telephone_number, presence: true, numericality: {only_integer: true}
          
   has_one_attached :profile_image       
@@ -21,7 +21,7 @@ class User < ApplicationRecord
       result = update(params, *options)
       clean_up_passwords
       result
-  end
+ end
   
   def get_profile_image(width, height)
   unless profile_image.attached?

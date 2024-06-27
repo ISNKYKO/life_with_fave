@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_user, only: [:edit, :update]
+  
   def new
     @post = Post.new
   end
@@ -33,14 +36,32 @@ class PostsController < ApplicationController
   end
   
   def update
-    post = Post.find(params[:id])
-    post.update(post_params)
-    redirect_to post_path(post.id)  
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to @post, notice: '投稿が更新されました。'
+    else
+      render :edit
+    end
   end
   
-  private
-
-  def post_params
-    params.require(:post).permit(:post_title, :image, :post_text)
-  end
+private
+  
+def authenticate_user
+  redirect_to new_user_session_path unless current_user
 end
+
+def authorize_user
+  post = Post.find(params[:id])
+  redirect_to posts_path unless current_user && current_user.id == post.user_id
+end
+
+def post_params
+  params.require(:post).permit(:post_title, :image, :post_text)
+end
+
+def redirect_if_not_owner
+  post = Post.find(params[:id])
+  redirect_to posts_path unless current_user && current_user.id == post.user_id
+end
+end
+
