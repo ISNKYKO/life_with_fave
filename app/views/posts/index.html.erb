@@ -1,3 +1,16 @@
+
+<%= search_form_for @q, url: posts_path, method: :get, local: true do |f| %>
+  <%= f.label :post_title_or_post_text_cont, "Search for:" %>
+  <%= f.search_field :post_title_or_post_text_cont %>
+  <%= f.submit "Search" %>
+<% end %>
+
+<% @posts.each do |post| %>
+  <h2><%= post.post_title %></h2>
+  <p><%= post.post_text %></p>
+<% end %>
+
+
 <% @posts.each do |post| %>
   <div>
     <%= link_to post_path(post.id) do %>

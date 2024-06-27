@@ -7,6 +7,14 @@ class Post < ApplicationRecord
   validates :post_title, presence: true
   validates :post_text, presence: true, length: { minimum: 10 }
   
+  def self.ransackable_attributes(auth_object = nil)
+    ["post_title", "post_text"]  # 検索可能な属性を指定
+  end
+  
+  def self.ransackable_associations(auth_object = nil)
+    ["favorites", "image_attachment", "image_blob", "post_comments", "user"]
+  end
+  
   def get_image
    unless image.attached?
     file_path = Rails.root.join('app/assets/images/no_image.jpg')
