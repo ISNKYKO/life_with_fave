@@ -1,4 +1,4 @@
-class PostsController < ApplicationController
+class Public::PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user, only: [:edit, :update]
   

@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Public::UsersController < ApplicationController
   before_action :authenticate_user! 
   before_action :correct_user, only: [:show, :index, :edit, :update]
   
