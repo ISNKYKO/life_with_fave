@@ -1,1 +1,22 @@
 @use '~bootstrap/scss/bootstrap';
+
+@font-face {
+  font-family: "Rocketeers";
+  src: asset-url('/fonts/Rocketeers.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TenhamasenFontVer.3-Regular";
+  src: asset-url('/fonts/TenhamasenFontVer.3-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Bansyu-retoromin-R_ver.3.2";
+  src: asset-url('/fonts/Bansyu-retoromin-R_ver.3.2.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
