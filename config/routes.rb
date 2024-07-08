@@ -18,10 +18,18 @@ Rails.application.routes.draw do
   get "homes/about", to: "homes#about"
   
   resources :posts, only: [:new, :create, :index, :show, :destroy, :edit, :update] do
-   resource :favorite, only: [:create, :destroy]
+   resources :favorites, only: [:create, :destroy]
    resources :post_comments, only: [:create, :destroy]
   end
   resources :users, only: [:show, :edit, :update, :index]
+  
+  resources :users do
+    member do
+      get :following, :followers
+    end
+    
+  end
+  resources :relationships, only: [:create, :destroy]
 end 
 end
   

@@ -5,21 +5,19 @@
   <p>投稿ユーザー画像：<%= image_tag @post.user.get_profile_image(100,100) %></p>
   <p>ユーザーネーム：<%= @post.user.name %></p>
   <p>投稿日：<%= @post.created_at.strftime('%Y/%m/%d') %></p>
+  
   <% if @post.user == current_user %>
     <%= link_to "削除", post_path(@post), method: :delete %>
     <%= link_to "編集", edit_post_path(@post.id) %>
   <% end %>
+  
   <% if @post.favorited_by?(current_user) %>
     <p>
-      <%= link_to post_favorite_path(@post), method: :delete do %>
         ♥<%= @post.favorites.count %> いいね
-      <% end %>
     </p>
     <% else %>
     <p>
-      <%= link_to post_favorite_path(@post), method: :post do %>
         ♡<%= @post.favorites.count %> いいね
-      <% end %>
     </p>
   <% end %>
 </div>
@@ -33,20 +31,7 @@
     <% if post_comment.user == current_user %>
       <%= link_to "削除", post_post_comment_path(post_comment.post, post_comment), method: :delete %>
     <% end %>
-    <% if @post.favorited_by?(current_user) %>
-    <p>
-      <%= link_to post_favorite_path(@post), method: :delete do %>
-        ♥<%= @post.favorites.count %> いいね
-      <% end %>
-    </p>
-    <% else %>
-    <p>
-      <%= link_to post_favorite_path(@post), method: :post do %>
-        ♡<%= @post.favorites.count %> いいね
-      <% end %>
-    </p>
   <% end %>
-<% end %>
 </div>
 
 <div>
@@ -55,3 +40,15 @@
     <%= f.submit "送信する" %>
   <% end %>
 </div>
+
+<% if @post.favorites.find_by(user: current_user) %>
+  <%= button_to 'Unlike', post_favorite_path(@post, @post.favorites.find_by(user: current_user)), method: :delete %>
+<% else %>
+  <%= button_to 'Like', post_favorites_path(@post), method: :post %>
+<% end %>
+
+<h3>いいねしたユーザー</h3>
+<% @post.favoriting_users.each do |user| %>
+  <p><%= user.name %></p>
+<% end %>
+

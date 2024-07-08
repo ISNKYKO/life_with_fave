@@ -3,12 +3,14 @@ class Post < ApplicationRecord
   belongs_to :user
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :favorites
+  has_many :favoriting_users, through: :favorites, source: :user
   
   validates :post_title, presence: true
   validates :post_text, presence: true, length: { minimum: 10 }
   
   def self.ransackable_attributes(auth_object = nil)
-    ["post_title", "post_text"]  # 検索可能な属性を指定
+    ["post_title", "post_text"]
   end
   
   def self.ransackable_associations(auth_object = nil)

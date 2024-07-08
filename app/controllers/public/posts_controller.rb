@@ -1,6 +1,6 @@
 class Public::PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_user, only: [:edit, :update]
+  before_action :authorize_user, only: [:destroy, :update]
   
   def new
     @post = Post.new
@@ -28,8 +28,7 @@ class Public::PostsController < ApplicationController
   end
   
   def destroy
-    post = Post.find(params[:id])
-    post.destroy
+   @post.destroy
     redirect_to posts_path
   end
   
@@ -38,7 +37,6 @@ class Public::PostsController < ApplicationController
   end
   
   def update
-    @post = Post.find(params[:id])
     if @post.update(post_params)
       redirect_to @post, notice: '投稿が更新されました。'
     else
@@ -53,8 +51,8 @@ def authenticate_user
 end
 
 def authorize_user
-  post = Post.find(params[:id])
-  redirect_to posts_path unless current_user && current_user.id == post.user_id
+  @post = Post.find(params[:id])
+  redirect_to posts_path unless current_user.id == @post.user_id
 end
 
 def post_params
