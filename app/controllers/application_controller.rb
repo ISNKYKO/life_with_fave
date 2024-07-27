@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   def configure_authentication
     if admin_controller?
       authenticate_admin!
-    else
-      authenticate_user! unless action_is_public?
+    elsif !action_is_public?
+      authenticate_user!
     end
   end
  
@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
   end
  
   def action_is_public?
-    controller_name == 'homes' && action_name == 'top'
+   controller_name == 'homes' && (action_name == 'top' || action_name == 'about')
   end
 end

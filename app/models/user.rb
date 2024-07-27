@@ -21,6 +21,8 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :favorites
   has_many :favorited_posts, through: :favorites, source: :post
+  has_many :timeline_items, dependent: :destroy
+
   
   
  def update_without_current_password(params, *options)
@@ -52,6 +54,10 @@ class User < ApplicationRecord
   
   def following?(other_user)
     following.include?(other_user)
+  end
+  
+  def admin?
+    self.admin == true
   end
   
 end

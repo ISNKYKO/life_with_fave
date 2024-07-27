@@ -4,7 +4,8 @@ class Public::UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts
+    @posts = @user.posts.published
+    @timeline_items = @user.timeline_items.order(created_at: :desc)
   end
   
   def edit

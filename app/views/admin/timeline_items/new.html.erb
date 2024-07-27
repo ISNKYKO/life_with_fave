@@ -1,0 +1,12 @@
+<h1>新しいタイムライン項目を追加</h1>
+
+<%= form_with(model: [@user, [:admin, @timeline_item]]) do |form| %>
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

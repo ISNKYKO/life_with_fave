@@ -7,8 +7,27 @@
     <%= csp_meta_tag %>
     
     <script src="https://kit.fontawesome.com/096c4d1d90.js" crossorigin="anonymous"></script>
+    
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap" rel="stylesheet">
+    
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+    <style>
+    /* フォントを適用したい要素のセレクタを指定 */
+     header {
+      font-family: 'Kiwi Maru', sans-serif;
+      /* 他のスタイルも必要に応じて追加 */
+     }
+     
+     footer {
+      font-family: 'Kiwi Maru', sans-serif;
+      /* 他のスタイルも必要に応じて追加 */
+     }
+    </style>
+    
   </head>
   
   
@@ -45,10 +64,10 @@
         </div>
       </nav>
     </header>
-    <main class="mb-auto">
+    <main class="mb-auto mt-auto">
     <%= yield %>
     </main>
-    <footer class="text-white pt-3 pb-3" style="background-color: #a3d6cc;">
+    <footer class="text-white pt-3 pb-3" style="background-color: #B10021;">
       <div class="container">
         <div class="row no-gutters">
           <div class="col-md-4">
@@ -56,10 +75,10 @@
           <div class="col-md-8">
             <ul class="p-0 list-unstyled">
               <li>
-                <a href="" title="About" class="text-50" style="color: #ff4242;">サイト概要</a>
+                <%= link_to 'サイト概要', 'homes/about', class: 'text-50', style: 'color: #FFF9F5;' %>
               </li>
               <li>
-                <a href="" title="License informations" class="text-50" style="color: #ff4242;">プライバシーポリシー</a>
+                <a href="" title="License informations" class="text-50" style="color: #FFF9F5;">プライバシーポリシー</a>
               </li>
             </ul>
           </div>

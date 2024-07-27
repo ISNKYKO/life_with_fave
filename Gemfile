@@ -67,3 +67,5 @@ gem "net-pop"
 gem "net-imap"
 
 gem 'ransack'
+
+gem 'simple_form'

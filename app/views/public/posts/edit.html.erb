@@ -1,35 +1,54 @@
-<h1>編集画面</h1>
+<!DOCTYPE html>
+<html>
 
-  <%= form_with(model: @post, local: true) do |form| %>
-  <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> 禁止されています:</h2>
-      <ul>
-        <% @post.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+<body>
+  <div class="container">
+    <form class="form-signin">
+      <h1 class="h3 mb-3 text-center">編集画面</h1>
+      <%= form_with(model: @post, local: true) do |form| %>
+      <% if @post.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger">
+            <h2><%= pluralize(@post.errors.count, "error") %> 禁止されています:</h2>
+            <ul>
+              <% @post.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+
+        <div class="form-group">
+          <%= form.label :image %>
+          <%= form.file_field :image, class: 'form-control', accept: "image/*" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :post_title %>
+          <%= form.text_field :post_title, class: 'form-control', placeholder: 'タイトル' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :post_text %>
+          <%= form.text_area :post_text, class: 'form-control', placeholder: 'テキスト' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :tag_list %>
+          <%= form.text_field :tag_list, value: @post.tags.map(&:name).join(', '), class: 'form-control', placeholder: 'タグ' %>
+        </div>
+
+        <div class="form-row text-center">
+          <div class="col">
+            <%= link_to '戻る', posts_path, class: "btn btn-lg btn-secondary btn-block" %>
+          </div>
+          <div class="col">
+            <%= form.submit "更新する", class: "btn btn-lg btn-primary btn-block" %>
+          </div>
+        </div>
+        <% end %>
+      </form>
     </div>
-  <% end %>
-  
-  <div class="field">
-   <%= form.label :image %>
-   <%= form.file_field :image, accept: "image/*" %>
-  </div>
-
-  <div class="field">
-    <%= form.label :post_title %>
-    <%= form.text_field :post_title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :post_text %>
-    <%= form.text_area :post_text %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit "更新する" %>
-  </div>
-<% end %>
-
-<%= link_to '戻る', posts_path %>
+  </body>
+</html>
+        
+        

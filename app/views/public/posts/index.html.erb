@@ -1,25 +1,56 @@
 
-<%= search_form_for @q, url: posts_path, method: :get, local: true do |f| %>
-  <%= f.label :post_title_or_post_text_cont, "Search for:" %>
-  <%= f.search_field :post_title_or_post_text_cont %>
-  <%= f.submit "Search" %>
-<% end %>
-
-<% @posts.each do |post| %>
-  <h2><%= post.post_title %></h2>
-  <p><%= post.post_text %></p>
-<% end %>
-
-
-<% @posts.each do |post| %>
-  <div>
-    <%= link_to post_path(post.id) do %>
-    　<%= image_tag post.get_image %>
+<main>
+  <div class="col-md-6 m-auto">
+  <%= search_form_for @q, url: posts_path, method: :get, local: true do |f| %>
+    <label for="q_post_title_or_post_text_cont">Search for:</label>
+    <%= f.search_field :post_title_or_post_text_cont %>
+    <%= f.submit "Search" %>
   <% end %>
-     <p>投稿ユーザー画像：<%= image_tag post.user.get_profile_image(100,100) %></p>
-    <p>タイトル：<%= post.post_title %></p>
-    <p>説明：<%= post.post_text %></p>
-    <p>ユーザーネーム：<%= post.user.name %></p>
-    <p><%= link_to "#{post.post_comments.count} コメント", post_path(post.id) %></p>
   </div>
-<% end %>
+  
+  <%# タグ一覧 %>
+<div class="tags col-md-6 m-auto">
+  <% Tag.all.each do |tag| %>
+    <%= link_to tag.name, tag_path(tag.name) %>
+  <% end %>
+</div>
+
+  <h1 class="text-center">投稿一覧</h1>
+  
+ <div class="mb-2">
+  <% @posts.each do |post| %>
+    <div class="col-md-6 m-auto">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <h3 class="mb-0"><%= post.post_title %></h3>
+          <div class="mb-1 text-body-secondary"><%= post.created_at.strftime("%b %d") %></div>
+          <p class="card-text mb-auto"><%= post.post_text.truncate(100) %></p>
+          <div class="mb-2">
+            <% post.tags.each do |tag| %>
+              <%= link_to tag.name, tag_path(tag.name), class: "badge bg-secondary me-1" %>
+            <% end %>
+          </div>
+          <a href="<%= post_path(post) %>" class="icon-link gap-1 icon-link-hover stretched-link">
+            Continue reading
+            <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+          </a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <% if post.get_image.present? %>
+            <%= image_tag post.get_image, width: 200, height: 250, class: 'bd-placeholder-img' %>
+          <% else %>
+            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+            </svg>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+</main>
+

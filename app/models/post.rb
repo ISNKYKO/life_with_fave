@@ -1,16 +1,24 @@
 class Post < ApplicationRecord
   has_one_attached :image
+  
+  enum status: { draft: 0, published: 1 }
+  
   belongs_to :user
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  has_many :favorites
   has_many :favoriting_users, through: :favorites, source: :user
+  has_many :taggings
+  has_many :tags, through: :taggings
+  
+  scope :drafts, -> { where(status: 'draft') }
+  scope :published, -> { where(status: 'published') }
   
   validates :post_title, presence: true
-  validates :post_text, presence: true, length: { minimum: 10 }
+  validates :post_text, presence: true, length: { minimum: 5 }
+  
   
   def self.ransackable_attributes(auth_object = nil)
-    ["post_title", "post_text"]
+    ["post_title", "post_text", "image"]
   end
   
   def self.ransackable_associations(auth_object = nil)
@@ -27,6 +35,24 @@ class Post < ApplicationRecord
   
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
+  end
+  
+  def tag_list
+    tags.map(&:name).join(', ')
+  end
+  
+  def draft?
+    status == 'draft'
+  end
+
+  def published?
+    status == 'published'
+  end
+  
+  def tag_list=(names)
+    self.tags = names.split(',').map do |n|
+      Tag.where(name: n.strip).first_or_create!
+    end
   end
   
 end
