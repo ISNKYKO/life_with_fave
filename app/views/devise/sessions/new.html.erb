@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .text-center {
+            padding: 100px 0;
+        }
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        .login-form-1 {
+            max-width: 400px;
+            margin: auto;
+        }
+        .main-login-form {
+            padding: 20px;
+            background: #f7f7f7;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            opacity: 0.8; 
+        }
+        .login-button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+        .etc-login-form {
+            margin-top: 10px;
+        }
+        .login-group-checkbox {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-image d-flex flex-column vh-100" style="background-image: url('<%= asset_path('22130454.jpg') %>'); background-size: cover; background-position: center 60%;">
+
+<div class="text-center">
+    <div class="logo">login</div>
+    <!-- Main Form -->
+    <div class="login-form-1">
+        <%= form_with model: @user, url: user_session_path, local: true, html: { class: 'text-left' } do |f| %>
+            <div class="login-form-main-message"></div>
+            <div class="main-login-form">
+                <div class="login-group">
+                    <div class="form-group">
+                        <%= f.label :email, class: 'sr-only' %>
+                        <%= f.email_field :email, class: 'form-control', id: 'lg_email', placeholder: 'email', autofocus: true, autocomplete: 'email' %>
+                    </div>
+                    <div class="form-group">
+                        <%= f.label :password, class: 'sr-only' %>
+                        <%= f.password_field :password, class: 'form-control', id: 'lg_password', placeholder: 'password', autocomplete: 'current-password' %>
+                    </div>
+                    <% if devise_mapping.rememberable? %>
+                        <div class="form-group login-group-checkbox">
+                            <%= f.check_box :remember_me, id: 'lg_remember' %>
+                            <%= f.label :remember_me, 'remember', for: 'lg_remember' %>
+                        </div>
+                    <% end %>
+                </div>
+                <button type="submit" class="login-button"><i class="fa fa-chevron-right"></i> Log in</button>
+            </div>
+            <div class="etc-login-form">
+                <p>forgot your password? <%= link_to 'click here', new_password_path(resource_name) %></p>
+                <p>new user? <%= link_to 'create new account', new_registration_path(resource_name) %></p>
+            </div>
+        <% end %>
+    </div>
+    <!-- end:Main Form -->
+</div>
+</div>
+</body>
+</html>

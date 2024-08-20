@@ -1,10 +1,46 @@
 
-<% provide(:title, 'All users') %>
-<h1>All users</h1>
+<style>
+ .search_form {
+          padding: 0px 50px 50px 50px;
+        }
+</style>
 
+<% if user_signed_in? %>
+  <div class="search_form col-md-4 m-auto">
+    <%= form_with url: search_path, local: true, method: :get do |f| %>
+      <%= f.text_field :word %>
+      <%= f.select :range, options_for_select([['User']]) %>
+      <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]) %>
+      <%= f.submit "検索", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+<% end %>
+
+<% provide(:title, 'All users') %>
+<h1 class="text-center pt-3">All users</h1>
+
+<div class="row">
   <% @users.each do |user| %>
-    <li>
-      <%= link_to user.name, user %>
-    </li>
-  <% end %>
+  <div class="col-lg-4 col-md-6 col-12">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="text-center">
+          <%= image_tag user.get_profile_image(100, 100) %>
+          <h4 class="mb-1"><%= link_to user.name, user %></h4>
+        </div>
+        <div class="mt-4 text-center">
+          <%= link_to 'グループを作成する', new_group_path %>
+          |
+          <%= link_to 'グループ一覧', groups_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+
+
+
+
   

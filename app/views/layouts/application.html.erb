@@ -5,32 +5,34 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    
+
     <script src="https://kit.fontawesome.com/096c4d1d90.js" crossorigin="anonymous"></script>
-    
+
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap" rel="stylesheet">
-    
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
     <style>
     /* フォントを適用したい要素のセレクタを指定 */
      header {
       font-family: 'Kiwi Maru', sans-serif;
       /* 他のスタイルも必要に応じて追加 */
      }
-     
+
      footer {
       font-family: 'Kiwi Maru', sans-serif;
       /* 他のスタイルも必要に応じて追加 */
      }
     </style>
-    
+
   </head>
-  
-  
   <body class="d-flex flex-column vh-100">
     <header class="shadow-sm">
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #a3d6cc;">
@@ -40,23 +42,58 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto">
-            <% if user_signed_in? %>
+            <ul class="navbar-nav mx-auto">
+            <% if admin_signed_in? %>
+              <% if request.fullpath.include?("/admin") %>
+          <li class="nav-item">
+            <%= link_to "Log Out", destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'dashboards', admin_dashboards_path, class: 'nav-link text-dark' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Posts', admin_posts_path, class: 'nav-link text-dark' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Post comments', admin_post_comments_path, class: 'nav-link text-dark' %>
+          </li>
+           <% else %>
+          <li class="nav-item">
+            <%= link_to "Sign Up", new_user_registration_path, class: 'nav-link text-dark' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Log In", new_user_session_path, class: 'nav-link text-dark' %>
+          </li>
+            <% end %>
+            
+            <% elsif user_signed_in? %>
             <li class="nav-item">
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
+              <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
+            </li>
+             <li class="nav-item">
+              <%= link_to 'My Page', user_path(current_user.id), class: 'nav-link text-dark' %>
             </li>
             <li class="nav-item">
-              <%= link_to '投稿フォーム', new_post_path, class: 'nav-link text-dark' %>
+              <%= link_to 'New Post', new_post_path, class: 'nav-link text-dark', data: {turbolinks: "false"} %>
             </li>
             <li class="nav-item">
-              <%= link_to 'マイページ', user_path(current_user.id), class: 'nav-link text-dark' %>
+              <%= link_to 'Users', users_path, class: 'nav-link text-dark' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Posts', posts_path, class: 'nav-link text-dark' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Drafts', drafts_posts_path, class: 'nav-link text-dark', data: {turbolinks: "false"} %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Map', map_path, class: 'nav-link text-dark' %>
             </li>
             <% else %>
             <li class="nav-item">
-              <%= link_to "新規登録", new_user_registration_path, class: 'nav-link text-dark' %>
+              <%= link_to "Sign Up", new_user_registration_path, class: 'nav-link text-dark' %>
             </li>
             <li class="nav-item">
-              <%= link_to "ログイン", new_user_session_path, class: 'nav-link text-dark' %>
+              <%= link_to "Log In", new_user_session_path, class: 'nav-link text-dark' %>
             </li>
             <% end %>
             </ul>
@@ -75,15 +112,13 @@
           <div class="col-md-8">
             <ul class="p-0 list-unstyled">
               <li>
-                <%= link_to 'サイト概要', 'homes/about', class: 'text-50', style: 'color: #FFF9F5;' %>
-              </li>
-              <li>
-                <a href="" title="License informations" class="text-50" style="color: #FFF9F5;">プライバシーポリシー</a>
+                <%= link_to 'サイト概要', homes_about_path, class: 'text-50', style: 'color: #FFF9F5;' %>
               </li>
             </ul>
           </div>
         </div>
       </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-jpostal-ja@2.14.45/jquery.jpostal.min.js"></script>
   </body>
 </html>

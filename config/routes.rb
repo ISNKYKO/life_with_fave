@@ -1,25 +1,29 @@
 Rails.application.routes.draw do
   
+  # Admin 名前空間のルート
   namespace :admin do
-    get 'posts/index'
-    get 'posts/destroy'
+    # Dashboards コントローラのindexアクション
+    get 'dashboards', to: 'dashboards#index'
+    
+    # PostComments, Posts, Users, TimelineItems のルーティング
+    resources :post_comments, only: [:index, :destroy]
+    resources :posts, only: [:index, :destroy]
+    resources :users, only: [:show, :destroy]
+    resources :timeline_items, only: [:new, :create]
   end
 
+  devise_for :users, controllers: {
+      registrations: "users/registrations",
+      sessions: 'users/sessions'
+  }
+
+  # Devise の管理者用ルーティング
   devise_for :admins, skip: [:registrations, :password], controllers: {
     sessions: 'admin/sessions'
   }
-  
-  namespace :admin do
-    get 'dashboards', to: 'dashboards#index'
-    resources :users, only: [:destroy, :show]
-    resources :timeline_items, only: [:new, :create]
-    resources :posts, only: [:index, :destroy]
-  end
+
 
   scope module: :public do
-    devise_for :users, controllers: {
-      registrations: "users/registrations"
-    }
 
     get 'users/:id', to: 'users#show', as: 'user_my_page'
     root to: "homes#top"
@@ -28,9 +32,7 @@ Rails.application.routes.draw do
 
     resources :posts, only: [:new, :create, :index, :show, :destroy, :edit, :update] do
       collection do
-        get :draft
-        post :save_draft
-        get :drafts
+        get 'drafts', to: 'posts#drafts', as: 'drafts'
       end
 
       resources :favorites, only: [:create, :destroy]
@@ -44,9 +46,17 @@ Rails.application.routes.draw do
     end
 
     resources :relationships, only: [:create, :destroy]
+    
+    resource :map, only: [:show] 
+    
+    resources :groups do
+     get "join" => "groups#join"
+    end
+    
+    get "search" => "searches#search"
   end
 end
-  
+
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 

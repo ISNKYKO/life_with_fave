@@ -2,7 +2,7 @@
 
 <% @posts.each do |post| %>
   <div class="post">
-    <h2><%= link_to post.title, post_path(post) %></h2>
-    <p><%= post.body %></p>
+    <h2><%= link_to post.post_title, post_path(post) %></h2>
+    <p><%= post.post_text %></p>
   </div>
 <% end %>

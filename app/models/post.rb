@@ -1,4 +1,7 @@
 class Post < ApplicationRecord
+  
+  paginates_per 10 # 1
+  
   has_one_attached :image
   
   enum status: { draft: 0, published: 1 }
@@ -15,6 +18,10 @@ class Post < ApplicationRecord
   
   validates :post_title, presence: true
   validates :post_text, presence: true, length: { minimum: 5 }
+  validates :address, presence: true
+  
+  geocoded_by :address
+  after_validation :geocode
   
   
   def self.ransackable_attributes(auth_object = nil)

@@ -22,7 +22,8 @@ class User < ApplicationRecord
   has_many :favorites
   has_many :favorited_posts, through: :favorites, source: :post
   has_many :timeline_items, dependent: :destroy
-
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
   
   
  def update_without_current_password(params, *options)
@@ -35,6 +36,21 @@ class User < ApplicationRecord
       clean_up_passwords
       result
  end
+ 
+  
+  def self.looks(search, word)
+    if search == "perfect_match"
+      @user = User.where("name LIKE?", "#{word}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?","#{word}%")
+    elsif search == "backward_match"
+      @user = User.where("name LIKE?","%#{word}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?","%#{word}%")
+    else
+      @user = User.all
+    end
+  end
   
   def get_profile_image(width, height)
   unless profile_image.attached?

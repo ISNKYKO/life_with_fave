@@ -14,8 +14,10 @@ class Public::PostsController < ApplicationController
     else
       @post.status = 'published'
     end
+    
+    
     if @post.save
-     if @post.draft?
+     if @post.status == 'draft'
         redirect_to drafts_posts_path, notice: '下書きが保存されました。'
      else
         redirect_to posts_path, notice: '投稿が公開されました。'
@@ -26,14 +28,21 @@ class Public::PostsController < ApplicationController
   end
 
   def drafts
-    @draft_posts = current_user.posts.drafts
+    @drafts = Post.where(status: 'draft', user_id: current_user.id)
   end
 
   def index
-    @q = Post.published.ransack(params[:q])
-    @posts = @q.result(distinct: true)
+    @search = Post.published.ransack(params[:q])
+    @posts = @search.result(distinct: true)
     if params[:tag]
       @posts = @Posts.joins(:tags).where(tags: { name: params[:tag] })
+    end
+    respond_to do |format|
+      format.html do
+        @posts = @posts.page(params[:page])
+      end
+      format.json do
+      end
     end
   end
 
@@ -82,6 +91,8 @@ class Public::PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:post_title, :image, :post_text, :status, :tag_list)
+    params.require(:post).permit(:post_title, :image, :post_text, :status, :tag_list, :address)
   end
+  
+  
 end

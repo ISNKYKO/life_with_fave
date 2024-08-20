@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
 
-<body>
   <div class="container">
-    <form class="form-signin">
       <h1 class="h3 mb-3 text-center">編集画面</h1>
       <%= form_with(model: @post, local: true) do |form| %>
       <% if @post.errors.any? %>
@@ -19,12 +15,17 @@
 
         <div class="form-group">
           <%= form.label :image %>
-          <%= form.file_field :image, class: 'form-control', accept: "image/*" %>
+          <%= form.file_field :image, accept: "image/*" %>
         </div>
 
         <div class="form-group">
           <%= form.label :post_title %>
           <%= form.text_field :post_title, class: 'form-control', placeholder: 'タイトル' %>
+        </div>
+        
+        <div class="form-group">
+        <%= form.text_field :zipcode, class: "form-control", placeholder: "郵便番号" %>
+        <%= form.text_field :address, class: "form-control", placeholder: "住所" %>
         </div>
 
         <div class="form-group">
@@ -44,11 +45,13 @@
           <div class="col">
             <%= form.submit "更新する", class: "btn btn-lg btn-primary btn-block" %>
           </div>
+          <% unless @post.published? %>
+            <div class="col">
+              <%= form.submit "投稿", name: "commit", class: "btn btn-lg btn-primary btn-block" %>
+            </div>
+          <% end %>
         </div>
         <% end %>
-      </form>
+
     </div>
-  </body>
-</html>
-        
         

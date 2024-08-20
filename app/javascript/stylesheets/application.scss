@@ -6,3 +6,8 @@
      margin-top: 50px; /* 上側の余白を指定 */
      margin-bottom: 50px;
    }
+   
+#map {
+  width: 100%;
+  height: calc(100vh - 88px - 179px);
+}

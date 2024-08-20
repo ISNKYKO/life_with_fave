@@ -15,6 +15,7 @@
         <div class="card-body d-flex justify-content-between">
           <div>
             <h3 class="card-title"><%= @post.post_title %></h3>
+            <p class="card-title"><%= @post.address %></p>
             <p class="card-text"><%= @post.post_text %></p>
             <div class="d-flex align-items-center mb-3">
               <%= image_tag @post.user.get_profile_image(100, 100), class: "user-image mr-2" %>
@@ -73,6 +74,7 @@
           <%= f.submit "送信する", class: "btn btn-primary" %>
         <% end %>
       </div>
+      <div id="map" class="my-4"></div>
     </div>
 
     <div class="col-md-4">
@@ -83,3 +85,59 @@
     </div>
   </div>
 </div>
+
+<style>
+#map {
+  height: 600px;
+  width: 100%;
+}
+</style>
+
+<script>
+//初期マップの設定
+let map
+let marker
+
+const contentString = `
+  <div class="information container p-0">
+    <div class="mb-3 d-flex align-items-center">
+      <img class="rounded-circle mr-2" src="<%= @post.user.profile_image %>" width="40" height="40">
+      <p class="lead m-0 font-weight-bold"><%= @post.user.name %></p>
+    </div>
+    <div class="mb-3">
+      <img class="thumbnail" src="<%= @post.image %>" loading="lazy">
+    </div>
+    <div>
+      <h1 class="h4 font-weight-bold"><%= @post.post_title %></h1>
+      <p class="text-muted"><%= @post.address %></p>
+      <p class="lead"><%= @post.post_text %></p>
+    </div>
+  </div>
+`;
+
+function initMap(){
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: <%= @post.latitude %>, lng: <%= @post.longitude %> },
+    zoom: 15
+  });
+
+  marker = new google.maps.Marker({
+      map: map,
+      position: { lat: <%= @post.latitude %>, lng: <%= @post.longitude %> },
+  });
+  
+   infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      ariaLabel: "<%= @post.post_title %>",
+  });
+
+  marker.addListener("click", () => {
+      infowindow.open({
+      anchor: marker,
+      map,
+  });
+ });
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPCunOfxeOc6Fj4VlJvZHfPaHbEKfN4xA&callback=initMap" async defer></script>
