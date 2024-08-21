@@ -101,11 +101,11 @@ let marker
 const contentString = `
   <div class="information container p-0">
     <div class="mb-3 d-flex align-items-center">
-      <img class="rounded-circle mr-2" src="<%= @post.user.profile_image %>" width="40" height="40">
+      <img class="rounded-circle mr-2" src="<%= url_for(@post.user.profile_image) %>" width="40" height="40">
       <p class="lead m-0 font-weight-bold"><%= @post.user.name %></p>
     </div>
     <div class="mb-3">
-      <img class="thumbnail" src="<%= @post.image %>" loading="lazy">
+      <img class="thumbnail" src="<%= url_for(@post.image) %>" loading="lazy">
     </div>
     <div>
       <h1 class="h4 font-weight-bold"><%= @post.post_title %></h1>
