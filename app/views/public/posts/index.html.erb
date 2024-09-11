@@ -1,4 +1,10 @@
 
+<style>
+.post-image {
+  object-fit: cover; /* 画像を要素に合わせて切り取る */
+}
+</style>
+
   <div class="col-md-4 pt-4 m-auto">
   <%= search_form_for @search, url: posts_path, method: :get, local: true do |f| %>
     <label for="post_title_or_post_text_cont">Post Search for:</label>
@@ -9,8 +15,8 @@
   
   <%# タグ一覧 %>
 <div class="tags col-md-4 pt-3 m-auto">
-   <% Tag.all.each do |tag| %>
-   <%= link_to tag.name, tag_path(tag.name) %>
+   <% @tags.each do |tag| %>
+   <%= link_to tag.name, posts_path(tag.name) %>
   <% end %>
 </div>
 
@@ -37,7 +43,7 @@
         </div>
         <div class="col-auto d-none d-lg-block">
           <% if post.get_image.present? %>
-            <%= image_tag post.get_image, width: 200, height: 250, class: 'bd-placeholder-img' %>
+            <%= image_tag post.get_image, width: 300, height: 300, class: 'bd-placeholder-img' %>
           <% else %>
             <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
               <rect width="100%" height="100%" fill="#55595c"></rect>

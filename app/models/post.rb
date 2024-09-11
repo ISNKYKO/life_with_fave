@@ -10,7 +10,7 @@ class Post < ApplicationRecord
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :favoriting_users, through: :favorites, source: :user
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
   
   scope :drafts, -> { where(status: 'draft') }

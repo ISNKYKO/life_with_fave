@@ -28,18 +28,17 @@ class Public::PostsController < ApplicationController
   end
 
   def drafts
-    @drafts = Post.where(status: 'draft', user_id: current_user.id)
+    @drafts = Post.where(status: 'draft', user_id: current_user.id).order(created_at: :desc)
   end
 
   def index
+    tag_ids = Tagging.where(post_id: Post.published.ids).pluck(:tag_id)
+    @tags = Tag.find(tag_ids) 
     @search = Post.published.ransack(params[:q])
     @posts = @search.result(distinct: true)
-    if params[:tag]
-      @posts = @Posts.joins(:tags).where(tags: { name: params[:tag] })
-    end
     respond_to do |format|
       format.html do
-        @posts = @posts.page(params[:page])
+        @posts = @posts.page(params[:page]).order(created_at: :desc)
       end
       format.json do
       end
