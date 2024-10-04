@@ -16,7 +16,7 @@
   <%# タグ一覧 %>
 <div class="tags col-md-4 pt-3 m-auto">
    <% @tags.each do |tag| %>
-   <%= link_to tag.name, posts_path(tag.name) %>
+   <%= link_to tag.name, tag_path(tag.name) %>
   <% end %>
 </div>
 

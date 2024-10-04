@@ -16,7 +16,7 @@
           <div>
             <h3 class="card-title"><%= @post.post_title %></h3>
             <p class="card-title"><%= @post.address %></p>
-            <p class="card-text"><%= @post.post_text %></p>
+            <p class="card-text"><%= simple_format(@post.post_text, sanitize: true)  %></p>
             <div class="d-flex align-items-center mb-3">
               <%= image_tag @post.user.get_profile_image(100, 100), class: "user-image mr-2" %>
               <div>

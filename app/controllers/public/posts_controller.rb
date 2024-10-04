@@ -1,6 +1,7 @@
 class Public::PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_user, only: [:destroy, :update]
+  before_action :authorize_user, only: [:edit, :destroy, :update]
+  before_action :set_post, only: [:edit, :update, :destroy, :show]
 
   def new
     @post = Post.new
@@ -29,6 +30,9 @@ class Public::PostsController < ApplicationController
 
   def drafts
     @drafts = Post.where(status: 'draft', user_id: current_user.id).order(created_at: :desc)
+    post_ids = @drafts.pluck(:id)  # 自分の下書きのIDを取得
+    tag_ids = Tagging.where(post_id: post_ids).pluck(:tag_id)  # 関連するタグのIDを取得
+    @tags = Tag.where(id: tag_ids)  # タグを取得
   end
 
   def index
@@ -48,6 +52,9 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @post_comment = PostComment.new
+    if @post.status == 'draft' && current_user.id != @post.user_id
+      redirect_to posts_path
+    end
   end
 
   def destroy
@@ -87,6 +94,10 @@ class Public::PostsController < ApplicationController
   def authorize_user
     @post = Post.find(params[:id])
     redirect_to posts_path unless current_user.id == @post.user_id
+  end
+  
+  def set_post
+    @post = Post.find(params[:id])
   end
 
   def post_params

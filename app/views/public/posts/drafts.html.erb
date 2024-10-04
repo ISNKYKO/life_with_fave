@@ -1,6 +1,6 @@
 
   <div class="tags col-md-4 pt-3 m-auto">
-    <% Tag.all.each do |tag| %>
+    <% @tags.each do |tag| %>
       <%= link_to tag.name, tag_path(tag.name) %>
     <% end %>
   </div>

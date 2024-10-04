@@ -1,24 +1,51 @@
-# README
+日常に好きを取り入れる
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+サイト概要
 
-Things you may want to cover:
+サイトテーマ
+国や音楽、キャラクターなどあらゆるものの
+概念ファッションやアイテムの情報を交換するサイト
 
-* Ruby version
+テーマを選んだ理由
+いつでもどこでも身に着けられる推しの概念アイテムを手早く見つけられるサイトがあるといいなと思ったことが理由です。
 
-* System dependencies
+自分の好きなものをいつでもどこでも身に着けていたいけれど、仕事に行くときはTPOに合わせた服装や持ち物でなければならないことが多いかと思います。
 
-* Configuration
+そういった場面でも持ち歩けるアイテムはないかと探しはじめたのですがなかなか見つかりませんでした。そこで、
 
-* Database creation
+「〇〇という作曲家の「△△」という曲を色や物で表現するとこんな感じではないか」、「〇〇のイメージに該当するアクセサリーや小物、服などが△△という店で売っていた」など情報交換ができるサイトがあると便利ではないかと考えました。
 
-* Database initialization
+また、昨今口コミから思いがけず爆発的に売れる商品もあるかと思いますのでお店から発信してもらうなど広告的な利用も可能かと思います。
 
-* How to run the test suite
+ターゲットユーザー
+・自分の欲しい概念ファッション、アイテムがどこに売っているかわからない人
+・バウンドコーデを楽しみたいが、何をどうしていいかわからない人
 
-* Services (job queues, cache servers, search engines, etc.)
+主な利用シーン
+・アイテム集めの情報収集に苦戦している人
+・ほしいはやりのアイテムがあるが、どこに売っているかわからない人
+・コアなアイテムを探している人
 
-* Deployment instructions
+設計書
 
-* ...
+
+開発環境
+・os: LInux(CentOS)
+・言語:HTML,CSS,JavaScript,Ruby,SQR
+・フレームワーク:Ruby on Rails
+・JSライブラリ: JQuery
+・IDE: Cloud9
+
+
+使用素材
+EC design（デザイン）
+http://design-ec.com/?p=55
+
+Unsplash
+https://unsplash.com/ja/%E5%86%99%E7%9C%9F/%E8%89%B2%E3%81%A8%E3%82%8A%E3%81%A9%E3%82%8A%E3%81%AE%E3%81%8A%E3%82%82%E3%81%A1%E3%82%83%E3%83%AD%E3%83%83%E3%83%88-mf_3yZnC6ug
+
+Unsplash
+https://unsplash.com/ja/%E5%86%99%E7%9C%9F/%E8%8C%B6%E8%89%B2%E3%81%AE%E6%9C%A8%E8%A3%BD%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AB%E3%83%AC%E3%82%B4%E3%81%AE%E3%83%9F%E3%83%8B%E3%83%95%E3%82%A3%E3%82%B0-H5Ffv4I5ZMI
+
+イラストAC
+https://www.ac-illust.com/main/search_result.php?word_id=2&word=%E8%83%8C%E6%99%AF
