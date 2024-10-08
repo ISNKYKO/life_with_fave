@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   validates :name, presence: true, length: { minimum: 1 }       
-  validates :telephone_number, presence: true, numericality: {only_integer: true}
+  validates :telephone_number, presence: true, numericality: {only_integer: true}, on: :create
          
   has_one_attached :profile_image       
   has_many :posts, dependent: :destroy
@@ -37,7 +37,7 @@ class User < ApplicationRecord
       result
  end
  
-  
+
   def self.looks(search, word)
     if search == "perfect_match"
       @user = User.where("name LIKE?", "#{word}")
